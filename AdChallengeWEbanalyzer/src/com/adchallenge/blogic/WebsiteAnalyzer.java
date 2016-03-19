@@ -41,21 +41,40 @@ public class WebsiteAnalyzer {
 	 */
 	Map<Integer, Set<Website>> allWebsiteCountMap = new HashMap<Integer, Set<Website>>();
 
-	/**
-	 * This map will contains, the name of the website with the Object of the
-	 * website. It will be easy to fetch the website object from the list of
-	 * website.
-	 */
-	Map<String, Website> urlWEbbsiteMapping = new HashMap<String, Website>();
+//	/**
+//	 * This map will contains, the name of the website with the Object of the
+//	 * website. It will be easy to fetch the website object from the list of
+//	 * website.
+//	 */
+//	Map<String, Website> urlWEbbsiteMapping = new HashMap<String, Website>();
+
+	public Website checkExistanceOfWEbsite(String pageUrl) {
+		Set<Integer> keySet = allWebsiteCountMap.keySet();
+		for (Integer integer : keySet) {
+			Set<Website> set = allWebsiteCountMap.get(integer);
+			boolean test = set.contains(new Website(pageUrl));
+			if(test == true){
+				Iterator<Website> iterator = set.iterator();
+				while(iterator.hasNext()){
+					Website next = iterator.next();
+					if(next.getWebsiteUrl().equals(pageUrl)){
+						return next;
+					}
+				}
+			}
+		}
+		return null;
+	}
 
 	// you may declare and use other variables or
 	// other helper methods you may need
 	public void reportPageAccess(String pageUrl) {
 		// your pre here
 
-		if (urlWEbbsiteMapping.containsKey(pageUrl)) {
+		Website r = checkExistanceOfWEbsite(pageUrl);
+		if (r!= null) {
 			// Get the website object if exist
-			Website website = urlWEbbsiteMapping.get(pageUrl);
+			Website website = r;
 			// remove it from Map
 			Set<Website> allWebsite = allWebsiteCountMap
 					.get(website.getCount());
@@ -95,7 +114,7 @@ public class WebsiteAnalyzer {
 				allWebsiteCountMap.put(website.getCount(), hashSet);
 			}
 			// Put new website MappingMap, to find object fast, next time.
-			urlWEbbsiteMapping.put(pageUrl, website);
+//			urlWEbbsiteMapping.put(pageUrl, website);
 		}
 	}
 
@@ -131,7 +150,7 @@ public class WebsiteAnalyzer {
 	 */
 	public void clean() {
 		allWebsiteCountMap.clear();
-		urlWEbbsiteMapping.clear();
+//		urlWEbbsiteMapping.clear();
 
 	}
 }

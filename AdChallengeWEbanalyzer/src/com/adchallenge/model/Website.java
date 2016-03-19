@@ -14,6 +14,12 @@ public class Website {
 	String websiteUrl;
 	Date lastClickedTime;
 
+	public Website(String string) {
+		this.websiteUrl = string;
+	}
+	public Website(){
+		
+	}
 	public int getCount() {
 		return count;
 	}
@@ -36,6 +42,18 @@ public class Website {
 
 	public void setLastClickedTime(Date lastClickedTime) {
 		this.lastClickedTime = lastClickedTime;
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.getWebsiteUrl().hashCode();
+	}
+	@Override
+	public boolean equals(Object arg0) {
+		Website web0 = (Website)arg0;
+		return web0.getWebsiteUrl().equals(this.getWebsiteUrl());
+		
+//		return super.equals(arg0);
 	}
 
 }
